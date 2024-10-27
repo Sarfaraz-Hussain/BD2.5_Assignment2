@@ -183,20 +183,34 @@ app.get('/', (req, res) => {
 function sortLowToHigh(s1, s2) {
   return s1.price - s2.price;
 }
+function sortHighToLow(s1, s2){
+  return s2.price - s1.price;
+}
 app.get('/stocks/sort/pricing', (req, res) => {
+  let pricing = req.query.pricing;
   let myStocks = stocks.slice();
-  myStocks.sort(sortLowToHigh);
+  if(pricing === 'low-to-high')
+    myStocks.sort(sortLowToHigh);
+  else
+    myStocks.sort(sortHighToLow);
   res.json(myStocks);
 });
 
 // ======================================================
 
-function sortByGrowth(s1, s2) {
+function sortByGrowthLowToHigh(s1, s2) {
   return s1.growth - s2.growth;
 }
+function sortByGrowthHighToLow(s1, s2){
+  return s2.growth - s1.growth;
+}
 app.get('/stocks/sort/growth', (req, res) => {
+  let growth = req.query.growth;
   let myStocks = stocks.slice();
-  myStocks.sort(sortByGrowth);
+  if(growth === 'low-to-high')
+    myStocks.sort(sortByGrowthLowToHigh);
+  else
+    myStocks.sort(sortByGrowthHighToLow);
   res.json(myStocks);
 });
 
